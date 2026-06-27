@@ -1,5 +1,7 @@
 import 'package:first_app/components/choicecard.dart';
+import 'package:first_app/models/userpref_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FormTwoPage extends StatefulWidget {
   const FormTwoPage({super.key});
@@ -9,9 +11,18 @@ class FormTwoPage extends StatefulWidget {
 }
 
 class _FormTwoPageState extends State<FormTwoPage> {
-  bool isMember = true;
+  bool isMember = false;
   bool isAllYouCanEat = false;
-  int noodleType = 3;
+  int noodleType = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    var userPref = context.read<UserPreferenceModel>();
+    isMember = userPref.isMember;
+    isAllYouCanEat = userPref.isAllYouCanEat;
+    noodleType = userPref.noodleType;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +41,7 @@ class _FormTwoPageState extends State<FormTwoPage> {
             onChanged: (bool? value) {
               setState(() {
                 isMember = value!;
+                context.read<UserPreferenceModel>().isMember = isMember;
               });
             },
           ),
@@ -41,6 +53,7 @@ class _FormTwoPageState extends State<FormTwoPage> {
             onChanged: (bool? value) {
               setState(() {
                 isAllYouCanEat = value!;
+                context.read<UserPreferenceModel>().isAllYouCanEat = isAllYouCanEat;
               });
             },
           ),
@@ -52,6 +65,7 @@ class _FormTwoPageState extends State<FormTwoPage> {
               onChanged:(int value) {
                 setState(() {
                   noodleType = value;
+                  context.read<UserPreferenceModel>().noodleType = noodleType;
                 });
               },
             ),

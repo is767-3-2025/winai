@@ -1,19 +1,30 @@
 
+import 'package:first_app/models/login_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class GridPage extends StatelessWidget {
+class GridPage extends StatefulWidget {
   const GridPage({super.key});
 
+  @override
+  State<GridPage> createState() => _GridPageState();
+}
+
+class _GridPageState extends State<GridPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Grid Page'),
+        title: Consumer<LoginModel>(
+          builder: (context, value, child) {
+            return Text('Gridpage : ${value.username}');
+          },
+        ),
       ),
       body: GridView.count(
         crossAxisCount: 2,
-        children: List.generate(5, (index) {
+        children: List.generate(6, (index) {
           return InkWell(
             onTap: () {
               Navigator.pushNamed(context, '/${index+1}');

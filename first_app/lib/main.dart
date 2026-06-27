@@ -1,13 +1,25 @@
+import 'package:first_app/models/login_model.dart';
+import 'package:first_app/models/userpref_model.dart';
 import 'package:first_app/pages/00_gridpage.dart';
 import 'package:first_app/pages/01_myhomepage.dart';
 import 'package:first_app/pages/02_listpage.dart';
 import 'package:first_app/pages/03_formpage.dart';
 import 'package:first_app/pages/04_form_two_page.dart';
+import 'package:first_app/pages/05_choosecard_page.dart';
 import 'package:first_app/pages/99_blankpage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LoginModel()),
+        ChangeNotifierProvider(create: (context) => UserPreferenceModel())
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +39,8 @@ class MyApp extends StatelessWidget {
         '/2': (context) => ListPage(),
         '/3': (context) => FormPage(),
         '/4': (context) => FormTwoPage(),
-        '/5': (context) => BlankPage(),
+        '/5': (context) => ChooseCardPage(),
+        '/6': (context) => BlankPage(),
       },
     );
   }

@@ -1,4 +1,6 @@
+import 'package:first_app/models/login_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({super.key});
@@ -27,6 +29,12 @@ class _FormPageState extends State<FormPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _username = context.read<LoginModel>().username;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -40,6 +48,7 @@ class _FormPageState extends State<FormPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                initialValue: _username,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   icon: Icon(Icons.person),
@@ -106,6 +115,8 @@ class _FormPageState extends State<FormPage> {
                 }
 
                 _formKey.currentState!.save();
+
+                context.read<LoginModel>().username = _username;
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
